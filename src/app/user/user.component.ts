@@ -1,7 +1,12 @@
-import { Component } from '@angular/core';
-import { DUMMY_USERS } from '../dummy-users';
+import { Component, EventEmitter, Input, Output} from '@angular/core';
 
-const randomIndex = Math.floor(Math.random()* DUMMY_USERS.length)
+import { User } from './user.model';
+
+// interface User{
+//     id: string;
+//     name: string;
+//     avatar: string;
+// }
 
 @Component({
   selector: 'app-user',
@@ -12,16 +17,26 @@ const randomIndex = Math.floor(Math.random()* DUMMY_USERS.length)
 })
   
 export class UserComponent {
- selectedUser = DUMMY_USERS[randomIndex]
+//using signal
+  //on doit utiliser la fonction input
+  // avatar = input.required<string>()
+  
+  @Input({ required: true }) user!: User
+  @Input ({required:true}) selected!:boolean
+  @Output() select = new EventEmitter<string>()
+
+  //quand on implemente  le input function  on doit pas utiliser le get pour les methodes on peut faire
+
+  // imagePath = computed(()=>{
+  //  return "assets/users/" + this.user.avatar
+//    })
+
 
   get imagePath() {
-    return 'assets/users/' + this.selectedUser.avatar 
+   return "assets/users/" + this.user.avatar
   }
-  
-  onSelected() {
-    const randomIndex = Math.floor(Math.random() * DUMMY_USERS.length)
-    this.selectedUser= DUMMY_USERS[randomIndex]
 
+  onSelectUser() {
+   this.select.emit(this.user.id)
  }
-
 }
