@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Input, Output} from '@angular/core';
+import { Component, EventEmitter, input, Input, output, Output} from '@angular/core';
 
-import { User } from './user.model';
+import { type User } from './user.model';
+import { CardComponent } from "../shared/card/card.component";
 
 // interface User{
 //     id: string;
@@ -11,7 +12,7 @@ import { User } from './user.model';
 @Component({
   selector: 'app-user',
   standalone: true,
-  imports: [],
+  imports: [CardComponent],
   templateUrl: './user.component.html',
   styleUrl: './user.component.css'
 })
@@ -22,8 +23,12 @@ export class UserComponent {
   // avatar = input.required<string>()
   
   @Input({ required: true }) user!: User
+
+  // user = input.required<string>()
   @Input ({required:true}) selected!:boolean
   @Output() select = new EventEmitter<string>()
+
+  //  show = output<string>() 
 
   //quand on implemente  le input function  on doit pas utiliser le get pour les methodes on peut faire
 
@@ -38,5 +43,8 @@ export class UserComponent {
 
   onSelectUser() {
    this.select.emit(this.user.id)
- }
+  }
+  
+
+  
 }
